@@ -26,7 +26,7 @@ public class CensusAnalyser {
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
         } catch ( RuntimeException e ){
             throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.NOT_CSV_TYPE );
+                    CensusAnalyserException.ExceptionType.NOT_CSV_TYPE_OR_INVALID_HEADER );
         }
     }
 }
