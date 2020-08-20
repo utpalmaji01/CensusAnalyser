@@ -18,8 +18,8 @@ public class CensusAnalyser {
         } catch ( IOException e ) {
             throw new CensusAnalyserException( e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
-        } catch (CSVBuilderException e ) {
-            throw new CensusAnalyserException( e.getMessage(),e.type.name());
+        } catch ( CSVBuilderException e ) {
+            throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
     }
 
@@ -28,13 +28,13 @@ public class CensusAnalyser {
         try ( Reader reader = Files.newBufferedReader( Paths.get( csvFilePath ) ) ) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator < IndianStateCodeCSV > stateCodeCSVIterator = csvBuilder.getCSVFileIterator( reader,
-                                                                                            IndianStateCodeCSV.class );
+                    IndianStateCodeCSV.class );
             return this.getCount( stateCodeCSVIterator );
         } catch ( IOException e ) {
             throw new CensusAnalyserException( e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
-        }catch ( CSVBuilderException e ) {
-            throw new CensusAnalyserException( e.getMessage(),e.type.name() );
+        } catch ( CSVBuilderException e ) {
+            throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
     }
 

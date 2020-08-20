@@ -13,7 +13,6 @@ public class CensusAnalyserTest {
     private static final String INVALID_HEADER_OR_DELIMITER_TYPE_PATH = "./src/test/resources/InvalidHeaderIndiaStateCensusData.csv";
 
 
-
     @Test
     public void givenIndianCensusCSVFileReturnsCorrectRecords() {
         try {
