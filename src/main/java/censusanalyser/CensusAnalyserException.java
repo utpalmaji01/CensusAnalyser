@@ -3,10 +3,10 @@ package censusanalyser;
 public class CensusAnalyserException extends Exception {
 
     enum ExceptionType {
-        CENSUS_FILE_PROBLEM, NOT_CSV_TYPE_OR_INVALID_HEADER
+        CENSUS_FILE_PROBLEM, NOT_CSV_TYPE_OR_INVALID_HEADER_OR_DELIMITER
     }
 
-    ExceptionType type;
+    public ExceptionType type;
 
     public CensusAnalyserException( String message, ExceptionType type ) {
         super( message );
