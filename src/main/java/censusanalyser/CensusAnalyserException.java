@@ -2,9 +2,8 @@ package censusanalyser;
 
 public class CensusAnalyserException extends Exception {
 
-
     public enum ExceptionType {
-        CENSUS_FILE_PROBLEM, NOT_CSV_TYPE_OR_INVALID_HEADER_OR_DELIMITER
+        CENSUS_FILE_PROBLEM, INVALID_TYPE_FILE, UNABLE_TO_PARSE
     }
 
     public ExceptionType type;
@@ -17,5 +16,10 @@ public class CensusAnalyserException extends Exception {
     public CensusAnalyserException( String message, String name ) {
         super( message );
         this.type = ExceptionType.valueOf( name );
+    }
+
+    public CensusAnalyserException( String message, ExceptionType type, Throwable cause ) {
+        super( message, cause );
+        this.type = type;
     }
 }

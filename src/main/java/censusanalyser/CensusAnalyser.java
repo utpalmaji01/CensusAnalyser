@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
@@ -16,12 +17,18 @@ public class CensusAnalyser {
     // load Indian Census data and analyse
     public Integer loadIndiaCensusData( String csvFilePath ) throws CensusAnalyserException {
         try ( Reader reader = Files.newBufferedReader( Paths.get( csvFilePath ) ) ) {
+            if ( ! csvFilePath.contains( ".csv" ) )
+                throw new IllegalArgumentException( "Invalid File Type" );
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator < IndiaCensusCSV > censusCSVIterator = csvBuilder.getCSVFileIterator( reader, IndiaCensusCSV.class );
-            return this.getCount( censusCSVIterator );
+            List < IndiaCensusCSV > censusCSVList = csvBuilder.getCSVFileList( reader, IndiaCensusCSV.class );
+            return censusCSVList.size();
         } catch ( IOException e ) {
             throw new CensusAnalyserException( e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
+        } catch ( IllegalArgumentException e ) {
+            throw new CensusAnalyserException( e.getMessage(),
+                    CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
+                    e.getCause() );
         } catch ( CSVBuilderException e ) {
             throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
@@ -30,13 +37,19 @@ public class CensusAnalyser {
     // load Indian State Code data and analyse
     public Integer loadIndianStateCodeData( String csvFilePath ) throws CensusAnalyserException {
         try ( Reader reader = Files.newBufferedReader( Paths.get( csvFilePath ) ) ) {
+            if ( ! csvFilePath.contains( ".csv" ) )
+                throw new IllegalArgumentException( "Invalid File Type" );
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator < IndianStateCodeCSV > stateCodeCSVIterator = csvBuilder.getCSVFileIterator( reader,
+            List < IndianStateCodeCSV > stateCodeCSVList = csvBuilder.getCSVFileList( reader,
                     IndianStateCodeCSV.class );
-            return this.getCount( stateCodeCSVIterator );
+            return stateCodeCSVList.size();
         } catch ( IOException e ) {
             throw new CensusAnalyserException( e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
+        } catch ( IllegalArgumentException e ) {
+            throw new CensusAnalyserException( e.getMessage(),
+                    CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
+                    e.getCause() );
         } catch ( CSVBuilderException e ) {
             throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
