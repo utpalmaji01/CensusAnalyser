@@ -80,6 +80,16 @@ public class CensusAnalyser {
         return sortedOnStateJson;
     }
 
+    public String getStateCodeWiseSortedCensusData() throws CensusAnalyserException {
+        if ( stateCodeCSVList == null || stateCodeCSVList.size() == 0 )
+            throw new CensusAnalyserException( "No Data", CensusAnalyserException.ExceptionType.NO_DATA );
+        Comparator < IndianStateCodeCSV > censusComparator = Comparator.comparing( census -> census.stateCode );
+        this.sort( stateCodeCSVList, censusComparator );
+        String sortedOnStateCodeJson = new Gson().toJson( stateCodeCSVList );
+        return sortedOnStateCodeJson;
+
+    }
+
     // sort any list in ascending order
     private < E > List < E > sort( List < E > list, Comparator < E > censusComparator ) {
         for ( int i = 0; i < list.size() - 1; i++ ) {
