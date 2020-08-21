@@ -17,6 +17,8 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
 
     List < IndiaCensusCSV > censusCSVList = null;
+    List < IndianStateCodeCSV > stateCodeCSVList = null;
+
 
     // load Indian Census data and analyse
     public Integer loadIndiaCensusData( String csvFilePath ) throws CensusAnalyserException {
@@ -46,7 +48,7 @@ public class CensusAnalyser {
             if ( ! csvFilePath.contains( ".csv" ) )
                 throw new IllegalArgumentException( "Invalid File Type" );
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            List < IndianStateCodeCSV > stateCodeCSVList = csvBuilder.getCSVFileList( reader,
+            stateCodeCSVList = csvBuilder.getCSVFileList( reader,
                     IndianStateCodeCSV.class );
             return stateCodeCSVList.size();
         } catch ( IOException e ) {
@@ -73,22 +75,23 @@ public class CensusAnalyser {
         if ( censusCSVList == null || censusCSVList.size() == 0 )
             throw new CensusAnalyserException( "No Data", CensusAnalyserException.ExceptionType.NO_DATA );
         Comparator < IndiaCensusCSV > censusComparator = Comparator.comparing( census -> census.state );
-        this.sort( censusComparator );
+        this.sort( censusCSVList, censusComparator );
         String sortedOnStateJson = new Gson().toJson( censusCSVList );
         return sortedOnStateJson;
-
     }
 
-    private void sort( Comparator < IndiaCensusCSV > censusComparator ) {
-        for ( int i = 0; i < censusCSVList.size() - 1; i++ ) {
-            for ( int j = 0; j < censusCSVList.size() - i - 1; j++ ) {
-                IndiaCensusCSV census1 = censusCSVList.get( j );
-                IndiaCensusCSV census2 = censusCSVList.get( j + 1 );
+    // sort any list in ascending order
+    private < E > List < E > sort( List < E > list, Comparator < E > censusComparator ) {
+        for ( int i = 0; i < list.size() - 1; i++ ) {
+            for ( int j = 0; j < list.size() - i - 1; j++ ) {
+                E census1 = list.get( j );
+                E census2 = list.get( j + 1 );
                 if ( censusComparator.compare( census1, census2 ) > 0 ) {
-                    censusCSVList.set( j, census2 );
-                    censusCSVList.set( j + 1, census1 );
+                    list.set( j, census2 );
+                    list.set( j + 1, census1 );
                 }
             }
         }
+        return list;
     }
 }
