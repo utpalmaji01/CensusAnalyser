@@ -85,8 +85,8 @@ public class CensusAnalyser {
             throw new CensusAnalyserException( "No Data", CensusAnalyserException.ExceptionType.NO_DATA );
         Comparator < IndiaCensusCSV > censusComparator = Comparator.comparing( census -> census.population );
         this.sort( censusCSVList, censusComparator );
-        String sortedOnStateJson = new Gson().toJson( censusCSVList );
-        return sortedOnStateJson;
+        String sortedOnStatePopulationJson = new Gson().toJson( censusCSVList );
+        return sortedOnStatePopulationJson;
     }
 
     public String getStateCodeWiseSortedCensusData() throws CensusAnalyserException {
