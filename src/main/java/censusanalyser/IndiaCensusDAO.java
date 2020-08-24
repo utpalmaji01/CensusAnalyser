@@ -17,8 +17,9 @@ public class IndiaCensusDAO {
     }
 
     public IndiaCensusDAO( IndianStateCodeCSV indianStateCodeCSV ) {
-       stateCode = indianStateCodeCSV.stateCode;
-       tin = indianStateCodeCSV.tin;
+        stateName = indianStateCodeCSV.stateName;
+        stateCode = indianStateCodeCSV.stateCode;
+        tin = indianStateCodeCSV.tin;
     }
 
     public String getStateName() {
