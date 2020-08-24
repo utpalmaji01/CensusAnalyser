@@ -166,7 +166,7 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void givenIndianCensusData_WhenSortedOnState_ShouldReturnLeastPopulatedAtFirst() {
+    public void givenIndianCensusData_WhenSortedOnPopulation_ShouldReturnLeastPopulatedAtFirst() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadIndiaCensusData( INDIA_CENSUS_CSV_FILE_PATH );
@@ -179,13 +179,39 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void givenIndianCensusData_WhenSortedOnState_ShouldReturnMostPopulatedAtLast() {
+    public void givenIndianCensusData_WhenSortedOnPopulation_ShouldReturnMostPopulatedAtLast() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadIndiaCensusData( INDIA_CENSUS_CSV_FILE_PATH );
             String populationWiseSortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
             IndiaCensusCSV[] indiaCensusCSV = new Gson().fromJson( populationWiseSortedCensusData, IndiaCensusCSV[].class );
             Assert.assertEquals( 199812341, indiaCensusCSV[ 28 ].population );
+        } catch ( CensusAnalyserException e ) {
+            Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenSortedOnAreaInSqKm_ShouldReturnSmallestAreaAtFirst() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadIndiaCensusData( INDIA_CENSUS_CSV_FILE_PATH );
+            String areaInSqKmWiseSortedCensusData = censusAnalyser.getAreaInSqKmWiseSortedCensusData();
+            IndiaCensusCSV[] indiaCensusCSV = new Gson().fromJson( areaInSqKmWiseSortedCensusData, IndiaCensusCSV[].class );
+            Assert.assertEquals( 3702, indiaCensusCSV[ 0 ].areaInSqKm );
+        } catch ( CensusAnalyserException e ) {
+            Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenSortedOnAreaInSqKm_ShouldReturnLargestAreaAtLast() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadIndiaCensusData( INDIA_CENSUS_CSV_FILE_PATH );
+            String areaInSqKmWiseSortedCensusData = censusAnalyser.getAreaInSqKmWiseSortedCensusData();
+            IndiaCensusCSV[] indiaCensusCSV = new Gson().fromJson( areaInSqKmWiseSortedCensusData, IndiaCensusCSV[].class );
+            Assert.assertEquals( 342239, indiaCensusCSV[ 28 ].areaInSqKm );
         } catch ( CensusAnalyserException e ) {
             Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
         }
