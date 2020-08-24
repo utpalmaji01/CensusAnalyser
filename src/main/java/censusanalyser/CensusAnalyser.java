@@ -102,6 +102,13 @@ public class CensusAnalyser {
         return new Gson().toJson( censusDAOList );
     }
 
+    public String getDensityPerSqKmWiseSortedCensusData() throws CensusAnalyserException {
+        censusDAOList = censusDAOMap.values().stream().collect( Collectors.toList() );
+        Comparator < IndiaCensusDAO > censusComparator = Comparator.comparing( IndiaCensusDAO :: getDensityPerSqKm );
+        this.sort( censusDAOList, censusComparator );
+        return new Gson().toJson( censusDAOList );
+    }
+
     // sort any list in ascending order
     private < E > void sort( List < E > list, Comparator < E > censusComparator ) throws CensusAnalyserException {
         if ( list == null || list.size() == 0 )
@@ -117,6 +124,4 @@ public class CensusAnalyser {
             }
         }
     }
-
-
 }
