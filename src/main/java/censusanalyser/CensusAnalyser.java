@@ -1,9 +1,7 @@
 package censusanalyser;
 
 import com.google.gson.Gson;
-import csvbuilder.CSVBuilderException;
-import csvbuilder.CSVBuilderFactory;
-import csvbuilder.ICSVBuilder;
+import csvbuilder.*;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -12,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 
 public class CensusAnalyser {
 
@@ -30,26 +27,22 @@ public class CensusAnalyser {
             if ( ! csvFilePath.contains( ".csv" ) )
                 throw new IllegalArgumentException( "Invalid File Type" );
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator < IndiaCensusCSV > csvFileIterator = csvBuilder.getCSVFileIterator( reader,
-                    IndiaCensusCSV.class );
+            Iterator < IndiaCensusCSV > csvFileIterator = csvBuilder.getCSVFileIterator( reader, IndiaCensusCSV.class );
             Iterable < IndiaCensusCSV > censusCSVIterable = () -> csvFileIterator;
             StreamSupport.stream( censusCSVIterable.spliterator(), false ).forEach( censusCSV ->
-                    censusDAOMap.put( censusCSV.stateName, new CensusDAO( censusCSV ) ) );
+                                                                                    censusDAOMap.put( censusCSV.stateName,
+                                                                                    new CensusDAO( censusCSV ) ) );
             return censusDAOMap.size();
         } catch ( IOException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
         } catch ( IllegalArgumentException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
-                    e.getCause() );
-        }catch ( RuntimeException e ){
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,
-                    e.getCause() );
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
+                                               e.getCause() );
+        } catch ( RuntimeException e ) {
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,
+                                               e.getCause() );
         } catch ( CSVBuilderException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    e.type.name() );
+            throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
     }
 
@@ -59,26 +52,22 @@ public class CensusAnalyser {
             if ( ! csvFilePath.contains( ".csv" ) )
                 throw new IllegalArgumentException( "Invalid File Type" );
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator < IndianStateCodeCSV > csvFileIterator = csvBuilder.getCSVFileIterator( reader,
-                    IndianStateCodeCSV.class );
+            Iterator < IndianStateCodeCSV > csvFileIterator = csvBuilder.getCSVFileIterator( reader, IndianStateCodeCSV.class );
             Iterable < IndianStateCodeCSV > censusCSVIterable = () -> csvFileIterator;
             StreamSupport.stream( censusCSVIterable.spliterator(), false ).forEach( stateCodeCSV ->
-                    censusDAOMap.put( stateCodeCSV.stateName, new CensusDAO( stateCodeCSV ) ) );
+                                                                                censusDAOMap.put( stateCodeCSV.stateName,
+                                                                                new CensusDAO( stateCodeCSV ) ) );
             return censusDAOMap.size();
         } catch ( IOException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
         } catch ( IllegalArgumentException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
-                    e.getCause() );
-        } catch ( RuntimeException e ){
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,
-                    e.getCause() );
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
+                                               e.getCause() );
+        } catch ( RuntimeException e ) {
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,
+                                               e.getCause() );
         } catch ( CSVBuilderException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    e.type.name() );
+            throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
     }
 
@@ -88,26 +77,22 @@ public class CensusAnalyser {
             if ( ! csvFilePath.contains( ".csv" ) )
                 throw new IllegalArgumentException( "Invalid File Type" );
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator < USCensusCSV > csvFileIterator = csvBuilder.getCSVFileIterator( reader,
-                    USCensusCSV.class );
+            Iterator < USCensusCSV > csvFileIterator = csvBuilder.getCSVFileIterator( reader, USCensusCSV.class );
             Iterable < USCensusCSV > censusCSVIterable = () -> csvFileIterator;
             StreamSupport.stream( censusCSVIterable.spliterator(), false ).forEach( censusCSV ->
-                    censusDAOMap.put( censusCSV.stateName, new CensusDAO( censusCSV ) ) );
+                                                                                    censusDAOMap.put( censusCSV.stateName,
+                                                                                    new CensusDAO( censusCSV ) ) );
             return censusDAOMap.size();
         } catch ( IOException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM );
         } catch ( IllegalArgumentException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
-                    e.getCause() );
-        }catch ( RuntimeException e ){
-            throw new CensusAnalyserException( e.getMessage(),
-                    CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,
-                    e.getCause() );
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.INVALID_TYPE_FILE,
+                                               e.getCause() );
+        } catch ( RuntimeException e ) {
+            throw new CensusAnalyserException( e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,
+                                               e.getCause() );
         } catch ( CSVBuilderException e ) {
-            throw new CensusAnalyserException( e.getMessage(),
-                    e.type.name() );
+            throw new CensusAnalyserException( e.getMessage(), e.type.name() );
         }
     }
 
