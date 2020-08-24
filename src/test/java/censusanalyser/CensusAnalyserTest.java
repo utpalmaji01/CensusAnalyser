@@ -308,4 +308,30 @@ public class CensusAnalyserTest {
             Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
         }
     }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnPopulation_ShouldReturnWyomingAtFirst() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadUSCensusData( US_CENSUS_CSV_FILE_PATH );
+            String populationWiseSortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
+            USCensusCSV[] usCensusCSV = new Gson().fromJson( populationWiseSortedCensusData, USCensusCSV[].class );
+            Assert.assertEquals( "Wyoming", usCensusCSV[ 0 ].stateName );
+        } catch ( CensusAnalyserException e ) {
+            Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenSortedOnPopulation_ShouldReturnCaliforniaAtLast() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadUSCensusData( US_CENSUS_CSV_FILE_PATH );
+            String populationWiseSortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
+            USCensusCSV[] usCensusCSV = new Gson().fromJson( populationWiseSortedCensusData, USCensusCSV[].class );
+            Assert.assertEquals( "California", usCensusCSV[ 50 ].stateName );
+        } catch ( CensusAnalyserException e ) {
+            Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
+        }
+    }
 }
