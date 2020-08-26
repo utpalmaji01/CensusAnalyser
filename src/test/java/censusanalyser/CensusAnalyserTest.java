@@ -268,7 +268,7 @@ public class CensusAnalyserTest {
             IndianStateCodeCSV[] indiaCensusCSV = new Gson().fromJson( stateWiseSortedCensusData, IndianStateCodeCSV[].class );
             Assert.assertEquals( "WB", indiaCensusCSV[ 36 ].stateCode );
         } catch ( CensusAnalyserException e ) {
-            Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
+           Assert.assertEquals( CensusAnalyserException.ExceptionType.NO_DATA, e.type );
         }
     }
 
