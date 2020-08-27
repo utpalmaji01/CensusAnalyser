@@ -10,29 +10,19 @@ public class CensusAnalyser {
     List < CensusDAO > censusDAOList;
     Map < String, CensusDAO > censusDAOMap;
 
+    public enum Country {INDIA, US;}
+
 
     public CensusAnalyser() {
         this.censusDAOList = new ArrayList <>();
         this.censusDAOMap = new HashMap <>();
     }
 
-    // load Indian Census data and analyse
-    public Integer loadIndiaCensusData( String csvFilePath ) throws CensusAnalyserException {
-        censusDAOMap = new CensusLoader().loadCensusData( csvFilePath, IndiaCensusCSV.class );
+    public int loadCensusData(Country country, String... csvFilePath) throws CensusAnalyserException {
+        censusDAOMap = new CensusLoader().loadCensusData(country, csvFilePath);
         return censusDAOMap.size();
     }
 
-    // load US Census data and analyse
-    public Integer loadUSCensusData( String csvFilePath ) throws CensusAnalyserException {
-        censusDAOMap = new CensusLoader().loadCensusData( csvFilePath, USCensusCSV.class );
-        return censusDAOMap.size();
-    }
-
-    // load Indian State Code data and analyse
-    public Integer loadIndianStateCodeData( String csvFilePath ) throws CensusAnalyserException {
-        censusDAOMap = new CensusLoader().loadCensusData( csvFilePath, IndianStateCodeCSV.class );
-        return censusDAOMap.size();
-    }
 
 
     public String getStateWiseSortedCensusData() throws CensusAnalyserException {
