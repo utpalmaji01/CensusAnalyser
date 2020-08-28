@@ -25,14 +25,14 @@ public class CensusAnalyserTest {
     private static final String US_CENSUS_CSV_FILE_PATH = "./src/test/resources/USCensusData.csv";
 
     @Test
-    public void givenIndianCensusCSVFileReturnsCorrectRecords() throws CensusAnalyserException {
+    public void givenIndianCensusCSVFile_WhenCorrectNoRecords_ShouldReturnsCorrectRecords() throws CensusAnalyserException {
         CensusAnalyser censusAnalyser = new CensusAnalyser();
         Integer numOfRecords = censusAnalyser.loadCensusData( CensusAnalyser.Country.INDIA, INDIA_CENSUS_CSV_FILE_PATH );
         Assert.assertEquals( ( Integer ) 29, numOfRecords );
     }
 
     @Test
-    public void givenIndianCensusCSVFileReturnsIncorrectRecords() throws CensusAnalyserException {
+    public void givenIndianCensusCSVFile_WhenIncorrectNoRecords_ShouldReturnsIncorrectRecords() throws CensusAnalyserException {
         CensusAnalyser censusAnalyser = new CensusAnalyser();
         Integer numOfRecords = censusAnalyser.loadCensusData( CensusAnalyser.Country.INDIA, INDIA_CENSUS_CSV_FILE_PATH );
         Assert.assertNotEquals( ( Integer ) 30, numOfRecords );
@@ -87,7 +87,7 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void givenIndianStateCodeCSVFileReturnsCorrectRecords() {
+    public void givenIndianStateCodeCSVFile_WhenCorrectNoRecords_ShouldReturnsCorrectRecords() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             Integer numOfRecords = censusAnalyser.loadCensusData( CensusAnalyser.Country.INDIA, INDIA_CENSUS_CSV_FILE_PATH, INDIA_STATE_CODE_CSV_FILE_PATH );
@@ -98,7 +98,7 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void givenIndianStateCodeCSVFileReturnsIncorrectRecords() throws CensusAnalyserException {
+    public void givenIndianStateCodeCSVFile_WhenIncorrectNoRecords_ReturnsIncorrectRecords() throws CensusAnalyserException {
         CensusAnalyser censusAnalyser = new CensusAnalyser();
         Integer numOfRecords = censusAnalyser.loadCensusData( CensusAnalyser.Country.INDIA, INDIA_CENSUS_CSV_FILE_PATH, INDIA_STATE_CODE_CSV_FILE_PATH );
         Assert.assertNotEquals( ( Integer ) 45, numOfRecords );
