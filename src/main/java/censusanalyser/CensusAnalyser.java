@@ -12,18 +12,15 @@ public class CensusAnalyser {
 
     public enum Country {INDIA, US;}
 
-
     public CensusAnalyser() {
         this.censusDAOList = new ArrayList <>();
         this.censusDAOMap = new HashMap <>();
     }
 
-    public int loadCensusData(Country country, String... csvFilePath) throws CensusAnalyserException {
-        censusDAOMap = new CensusLoader().loadCensusData(country, csvFilePath);
+    public int loadCensusData( Country country, String... csvFilePath ) throws CensusAnalyserException {
+        censusDAOMap = new CensusLoader().loadCensusData( country, csvFilePath );
         return censusDAOMap.size();
     }
-
-
 
     public String getStateWiseSortedCensusData() throws CensusAnalyserException {
         censusDAOList = censusDAOMap.values().stream().collect( Collectors.toList() );
